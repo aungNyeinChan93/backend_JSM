@@ -3,6 +3,7 @@ import { config } from 'dotenv';
 import connectDB from './connectDB.js';
 import errorMiddleware from './middlewares/errorMiddleware.js';
 import testRouter from './routes/testRouter.js';
+import loggerMiddleware from './middlewares/loggerMIddleware.js';
 
 
 // dotenv configuration
@@ -20,6 +21,7 @@ connectDB(() => {
 
 // Middlewares
 app.use(express.json());
+app.use(loggerMiddleware);
 
 
 // routes
