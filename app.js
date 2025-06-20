@@ -2,6 +2,7 @@ import express from 'express';
 import { config } from 'dotenv';
 import connectDB from './connectDB.js';
 import errorMiddleware from './middlewares/errorMiddleware.js';
+import testRouter from './routes/testRouter.js';
 
 
 // dotenv configuration
@@ -22,14 +23,7 @@ app.use(express.json());
 
 
 // routes
-app.get('/tests', (req, res, next) => {
-    try {
-        res.status(403)
-        throw new Error('This is a test error');
-    } catch (error) {
-        return next(error);
-    }
-})
+app.use('/api/v1/tests', testRouter)
 
 
 // error handling middleware
