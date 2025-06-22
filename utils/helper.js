@@ -3,7 +3,7 @@ import bcrypt, { genSaltSync } from 'bcryptjs';
 
 // JWT utility functions for signing and verifying JSON Web Tokens (JWT)
 export const JWT = {
-    jwt_sign: (payload, secretKey) => jwt.sign(payload, secretKey, { algorithm: 'HS256' }),
+    jwt_sign: (payload, secretKey) => jwt.sign(payload, secretKey, { algorithm: 'HS256', expiresIn: '1h' }),
     jwt_verify: (token, secretKey) => {
         try {
             return jwt.verify(token, secretKey, { algorithms: ['HS256'] });
