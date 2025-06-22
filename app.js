@@ -3,7 +3,7 @@ import connectDB from './connectDB.js';
 import errorMiddleware from './middlewares/errorMiddleware.js';
 import testRouter from './routes/testRouter.js';
 import loggerMiddleware from './middlewares/loggerMIddleware.js';
-import { PORT } from './config/env.js';
+import { PORT, CookieSecret } from './config/env.js';
 import authRouter from './routes/authRouter.js';
 import userRouter from './routes/userRouter.js';
 import subscriptionRouter from './routes/subscriptionRouter.js';
@@ -22,7 +22,10 @@ await connectDB(() => {
 // Middlewares
 app.use(express.json());
 app.use(loggerMiddleware);
-app.use(cookieParser());
+app.use(cookieParser(CookieSecret));
+
+
+
 
 
 // routes

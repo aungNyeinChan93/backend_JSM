@@ -13,6 +13,20 @@ UserSchema.statics.test = async function (name) {
     console.log(`Testing User model with name: ${name}`);
 }
 
+// register hooks
+UserSchema.statics.register = async function (name, email, password) {
+    if (!name || !email || !password) {
+        throw new Error('Name, email, and password are required!');
+    }
+    const exisit = await this.findOne({ email });
+    if (exisit) {
+        throw new Error('User already exists with this email!');
+    }
+    const userDoc = await this.create({ name, email, password });
+    const user = await this.findById(userDoc._id, { password: 0, __v: 0 }).lean();
+    return user;
+}
+
 // model
 const UserModel = model('User', UserSchema, 'users');
 
