@@ -82,6 +82,35 @@ const authController = {
         } catch (error) {
             return next(error);
         }
+    },
+    logout: async (req, res, next) => {
+        try {
+            const { authorization } = req.headers;
+
+            if (!authorization || !authorization.startsWith('Bearer')) {
+                res.status(401);
+                return next(new Error('Authorization token is required!'));
+            }
+
+            const token = authorization && authorization.split(' ')[1];
+
+            const decoded = JWT.jwt_verify(token, JWT_SECRET);
+
+            const { name, _id } = decoded && await UserModel.findById(decoded._id, { password: 0, __v: 0 }).lean();
+
+            if (!name) {
+                res.status(401);
+                return next(new Error('User not found!'));
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: `${name} logged out successfully!`,
+                result: { user_id: _id }
+            });
+        } catch (error) {
+            return next(error);
+        }
     }
 }
 
