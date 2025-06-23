@@ -3,7 +3,7 @@ import { Schema, model, startSession } from "mongoose";
 const SubscriptionSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'User ID is required!'], index: true },
     name: { type: Schema.Types.String, trim: true, required: [true, 'Subscription Name is required!'] },
-    email: { type: Schema.Types.String, required: [true, 'Email is required!'], lowerCase: true },
+    email: { type: Schema.Types.String, unique: false, required: [true, 'Email is required!'], lowerCase: true },
     price: { type: Schema.Types.Number, required: [true, 'Price is required!'], min: [0, 'Price must be a positive number'] },
     currency: { type: Schema.Types.String, default: 'MMK', enum: ['USD', 'EUR', 'MMK'] },
     frequency: { type: Schema.Types.String, required: [true, 'Frequency is required!'], enum: ['daily', 'weekly', 'monthly', 'yearly'] },
