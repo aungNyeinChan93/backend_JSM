@@ -8,6 +8,7 @@ import authRouter from './routes/authRouter.js';
 import userRouter from './routes/userRouter.js';
 import subscriptionRouter from './routes/subscriptionRouter.js';
 import cookieParser from 'cookie-parser';
+import arcjetMiddleware from './middlewares/arcjetMiddleware.js';
 
 
 const app = express();
@@ -23,9 +24,7 @@ await connectDB(() => {
 app.use(express.json());
 app.use(loggerMiddleware);
 app.use(cookieParser(CookieSecret));
-
-
-
+// app.use(arcjetMiddleware);
 
 
 // routes
