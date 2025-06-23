@@ -6,7 +6,7 @@ const subscriptionController = {
         try {
             const { user_id } = req;
             if (user_id !== req.params.user_id) {
-                const error = new Error('you can not authorize!');
+                const error = new Error('you are not authorize!');
                 error.ststus = 401;
                 return next(error)
             }
