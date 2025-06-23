@@ -1,4 +1,5 @@
 import { Router } from "express";
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 
 const testRouter = Router();
@@ -56,6 +57,16 @@ testRouter.get('/cookies/drop', (req, res, next) => {
     } catch (error) {
         return next(error);
     }
+})
+
+// check authentication
+testRouter.get('/auth-check', authMiddleware, (req, res, next) => {
+    const { user_id: _id } = req;
+    _id && res.status(200).json({
+        success: true,
+        message: 'User is authenticated',
+        result: { _id }
+    });
 })
 
 

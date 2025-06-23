@@ -1,5 +1,6 @@
 import { Router } from "express";
 import userController from "../controllers/userController.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 const userRouter = Router();
 
@@ -9,7 +10,7 @@ const userRouter = Router();
 // userRouter.put('/:id', userController.modify);
 // userRouter.delete('/:id', userController.drop);
 
-
+userRouter.use(authMiddleware); // Apply auth middleware to all routes in this router
 
 userRouter.route('/')
     .get(userController.users)

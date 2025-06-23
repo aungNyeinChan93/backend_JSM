@@ -96,7 +96,7 @@ const authController = {
 
             const decoded = JWT.jwt_verify(token, JWT_SECRET);
 
-            const { name, _id } = decoded && await UserModel.findById(decoded._id, { password: 0, __v: 0 }).lean();
+            const { name, _id } = decoded && await UserModel.findById(decoded._id).lean();
 
             if (!name) {
                 res.status(401);
