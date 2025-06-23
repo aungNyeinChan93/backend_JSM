@@ -69,6 +69,18 @@ testRouter.get('/auth-check', authMiddleware, (req, res, next) => {
     });
 })
 
+// test error
+testRouter.get('/errors', (req, res, next) => {
+    try {
+        const error = new Error('This is a test error');
+        error.status = 400;
+        next(error)
+    } catch (error) {
+        console.log(error.status);
+        return next(error);
+    }
+})
+
 
 
 export default testRouter;

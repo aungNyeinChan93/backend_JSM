@@ -3,7 +3,7 @@ import { Schema, model, startSession } from "mongoose";
 const SubscriptionSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: [true, 'User ID is required!'], index: true },
     name: { type: Schema.Types.String, trim: true, required: [true, 'Subscription Name is required!'] },
-    email: { type: Schema.Types.String, unique: true, required: [true, 'Email is required!'], lowerCase: true },
+    email: { type: Schema.Types.String, required: [true, 'Email is required!'], lowerCase: true },
     price: { type: Schema.Types.Number, required: [true, 'Price is required!'], min: [0, 'Price must be a positive number'] },
     currency: { type: Schema.Types.String, default: 'MMK', enum: ['USD', 'EUR', 'MMK'] },
     frequency: { type: Schema.Types.String, required: [true, 'Frequency is required!'], enum: ['daily', 'weekly', 'monthly', 'yearly'] },
@@ -19,7 +19,7 @@ const SubscriptionSchema = new Schema({
         }
     },
     renewalDate: {
-        type: Schema.Types.Date, required: [true, 'Renewal date is required!'], validate: {
+        type: Schema.Types.Date, validate: {
             validator: function (v) {
                 return v > this.startDate;
             },
@@ -40,9 +40,6 @@ const SubscriptionSchema = new Schema({
 });
 
 
-const SubscriptionModel = model('Subscription', SubscriptionSchema, 'subscriptions');
-export default SubscriptionModel;
-
 // pre-save hook to renewalDate if not provided
 SubscriptionSchema.pre('save', function (next) {
     if (!this.renewalDate) {
@@ -61,3 +58,6 @@ SubscriptionSchema.pre('save', function (next) {
     }
     next();
 });
+
+const SubscriptionModel = model('Subscription', SubscriptionSchema, 'subscriptions');
+export default SubscriptionModel;
